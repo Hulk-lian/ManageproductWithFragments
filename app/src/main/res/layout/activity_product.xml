@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lisVlistItems"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="añadir"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:id="@+id/AP_fab_añadir"
+
+        app:backgroundTint="?attr/colorPrimaryDark"
+        android:layout_margin="26dp"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/lisVlistItems"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_gravity="center_vertical|right" />
+
+</android.support.design.widget.CoordinatorLayout>

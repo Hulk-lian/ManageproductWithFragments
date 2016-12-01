@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jsw.manageproductrecycler">
+
+    <application
+        android:name=".Product_Application"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".SplashScreen_Activity">
+        </activity>
+        <activity
+            android:name=".Login_Activity"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ManageProduct_Activity"
+            android:theme="@style/AppTheme" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".AddProduct_Activity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings.AccountSettings"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings.GeneralSettings"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SignUp_Activity"></activity>
+    </application>
+
+</manifest>
