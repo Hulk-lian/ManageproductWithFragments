@@ -16,8 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jsw.manageproductrecycler.Model.Product;
-import com.jsw.manageproductrecycler.interfaces.ILogin;
 import com.jsw.manageproductrecycler.interfaces.IValidateAccount;
 
 public class Login_Activity extends AppCompatActivity implements IValidateAccount.View {
@@ -126,7 +124,7 @@ public class Login_Activity extends AppCompatActivity implements IValidateAccoun
      * Open ManageProduct activity to show products when the login is correct.
      */
     private void logear(){
-        Intent intent = new Intent(this, ManageProduct_Activity.class);
+        Intent intent = new Intent(this, ListProductFragment.class);
         startActivity(intent);
         finish();
 
@@ -140,7 +138,7 @@ public class Login_Activity extends AppCompatActivity implements IValidateAccoun
 
 
     public void startActivity(){
-        Intent intent= new Intent(Login_Activity.this, ManageProduct_Activity.class);
+        Intent intent= new Intent(Login_Activity.this, ListProductFragment.class);
         startActivity(intent);
     }
 }

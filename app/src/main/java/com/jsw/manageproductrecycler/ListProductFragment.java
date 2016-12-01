@@ -4,29 +4,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jsw.manageproductrecycler.Adapter.ProductAdapter;
-import com.jsw.manageproductrecycler.Adapter.ReciclerAdapter;
 import com.jsw.manageproductrecycler.Model.Product;
 import com.jsw.manageproductrecycler.Settings.AccountSettings;
 import com.jsw.manageproductrecycler.Settings.GeneralSettings;
 import com.jsw.manageproductrecycler.interfaces.IProducto;
-
-import java.io.Serializable;
 
 /*Cuando hacemos que herede de ListActivity Internamente ya tiene un tipo definido que es la lista
 *
@@ -35,14 +28,13 @@ import java.io.Serializable;
 
 //no es necesario llamar al notifyDataSetChande despues de add, insert, remove,clear y sort
 // porque estos metodos lo llama automaticamente setNotyfiOnChange = true y se utiliza la copia local.
-public class ManageProduct_Activity extends AppCompatActivity implements IProducto {
+public class ListProductFragment extends Fragment implements IProducto {
 
   //  private ReciclerAdapter mAdapter; //Adapter
     //private RecyclerView mReciclerView; //Recycler View
 
     private ListView listProduct;
     private FloatingActionButton fabAdd;
-    private Button btnctmdelete;
 
     private ProductAdapter adapterP;
 
@@ -62,7 +54,7 @@ public class ManageProduct_Activity extends AppCompatActivity implements IProduc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
+        setContentView(R.layout.fragment_list_product);
        // mAdapter = new ReciclerAdapter(this); //Add the adapter
 
         adapterP= new ProductAdapter(this);
@@ -83,7 +75,7 @@ public class ManageProduct_Activity extends AppCompatActivity implements IProduc
 
                 Bundle bundle= new Bundle();
                 bundle.putParcelable(PRODUCKKEY, paux);
-                Intent intent= new Intent(ManageProduct_Activity.this,AddProduct_Activity.class);
+                Intent intent= new Intent(ListProductFragment.this,ManageProductFragment.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent,EDIT_PRODUCT);
 
@@ -118,7 +110,7 @@ public class ManageProduct_Activity extends AppCompatActivity implements IProduc
 
         if (item.getItemId()== R.id.btn_delete_ctm) {
 
-            new AlertDialog.Builder(ManageProduct_Activity.this).setTitle(R.string.alertDialog_title)
+            new AlertDialog.Builder(ListProductFragment.this).setTitle(R.string.alertDialog_title)
                     .setMessage(R.string.alertDialog_sure)
                     .setPositiveButton(R.string.alertDialog_yes, new DialogInterface.OnClickListener() {
                         @Override
@@ -211,7 +203,7 @@ public class ManageProduct_Activity extends AppCompatActivity implements IProduc
      * @param v Button View
      */
     public void add(View v){
-        intent = new Intent(ManageProduct_Activity.this, AddProduct_Activity.class);
+        intent = new Intent(ListProductFragment.this, ManageProductFragment.class);
         startActivityForResult(intent, 0);
     }
 

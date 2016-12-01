@@ -170,7 +170,7 @@ public class SignUp_Activity extends AppCompatActivity implements IvalidateUser.
 
     @Override
     public void startActivity() {
-        Intent intent= new Intent(SignUp_Activity.this,ManageProduct_Activity.class);
+        Intent intent= new Intent(SignUp_Activity.this,ListProductFragment.class);
         startActivity(intent);
     }
 }
