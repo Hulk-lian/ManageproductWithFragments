@@ -31,9 +31,10 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.jsw.manageproductrecycler.interfaces.IvalidateUser;
+import com.jsw.manageproductrecycler.interfaces.SignupPresenter;
+import com.jsw.manageproductrecycler.presenter.SignupPresenterImpl;
 
-public class SignUp_Activity extends AppCompatActivity implements IvalidateUser.View {
+public class SignUp_Activity extends AppCompatActivity implements SignupPresenter.View {
 
     RelativeLayout layout;
     RadioGroup mRg;
@@ -46,7 +47,7 @@ public class SignUp_Activity extends AppCompatActivity implements IvalidateUser.
 
     private AdapterView.OnItemSelectedListener mSpinnerListener;
 
-    private SignupPresenter presenter;
+    private SignupPresenterImpl presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class SignUp_Activity extends AppCompatActivity implements IvalidateUser.
         mTilPassword = (TextInputLayout)findViewById(R.id.til_password2);
         layout=(RelativeLayout)findViewById(R.id.activity_sign_up);
 
-        presenter= new SignupPresenter(this);
+        presenter= new SignupPresenterImpl(this);
 
         //muesta el nombre de la empresa si se checkea el radio button de empresa
         //tipo de cliente

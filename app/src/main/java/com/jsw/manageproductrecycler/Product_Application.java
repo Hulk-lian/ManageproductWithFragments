@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by usuario on 20/10/16.
- */
-
 public class Product_Application extends Application {
     private ArrayList<Product> products;
 

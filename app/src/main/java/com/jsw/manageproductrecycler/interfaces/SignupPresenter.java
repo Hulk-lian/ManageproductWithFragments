@@ -6,7 +6,7 @@ import com.jsw.manageproductrecycler.Model.Error;
 
 
 
-public interface IvalidateUser extends IValidateAccount {
+public interface SignupPresenter extends IValidateAccount {
 
     interface Presenter {
     int validateCredentialsEmail(String email);

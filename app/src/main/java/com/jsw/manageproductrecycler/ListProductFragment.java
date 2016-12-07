@@ -1,17 +1,21 @@
 package com.jsw.manageproductrecycler;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -33,15 +37,16 @@ public class ListProductFragment extends Fragment implements IProducto {
   //  private ReciclerAdapter mAdapter; //Adapter
     //private RecyclerView mReciclerView; //Recycler View
 
+    private static final int EDIT_PRODUCT = 1;
+    private static final int ADD_PRODUCT = 0;
+
     private ListView listProduct;
     private FloatingActionButton fabAdd;
+
 
     private ProductAdapter adapterP;
 
     public static String PRODUCKKEY=PRODUCT_KEY;
-
-    private static final int EDIT_PRODUCT = 1;
-    private static final int ADD_PRODUCT = 0;
 
     private Intent intent;
     boolean sorted = false;
@@ -50,10 +55,39 @@ public class ListProductFragment extends Fragment implements IProducto {
     int posProd;
 
 
+    //objecto que  comunica la activity con el listproductListener
+    private ListProductListener mCallback;
+
+    interface ListProductListener{
+        showManageProduct(Bundle bundle);//lanza el fragment manageproduct
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            mCallback=(ListProductListener)activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(getContext().toString() +" must implement ListProductListener");
+        }
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback=null;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.fragment_list_product);
        // mAdapter = new ReciclerAdapter(this); //Add the adapter
 

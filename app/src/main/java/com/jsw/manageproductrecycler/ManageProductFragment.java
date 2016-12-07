@@ -24,7 +24,7 @@ public class ManageProductFragment extends Fragment implements IProducto {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
         mName = (TextInputLayout) findViewById(R.id.til_nombre);

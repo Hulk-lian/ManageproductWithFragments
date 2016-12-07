@@ -24,7 +24,7 @@ package com.jsw.manageproductrecycler.interfaces;
  * There is a validatePassword method, with a user and a password.
  */
 
-public interface ILogin {
+public interface LoginPresenter {
     interface  View{
         public void setMessageError(String error, int idOut);
     }

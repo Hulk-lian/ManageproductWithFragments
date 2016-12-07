@@ -17,11 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jsw.manageproductrecycler.interfaces.IValidateAccount;
+import com.jsw.manageproductrecycler.presenter.LoginPresenterImpl;
 
 public class Login_Activity extends AppCompatActivity implements IValidateAccount.View {
 
     //region vbles
-    private LoginPresenter mLoginMVP;
+    private LoginPresenterImpl mLoginMVP;
     private EditText mETPassword;
     private EditText mETUser;
     private TextInputLayout mTilPass, mTilUser;
@@ -37,7 +38,7 @@ public class Login_Activity extends AppCompatActivity implements IValidateAccoun
         setContentView(R.layout.activity_login);
 
         //region Instances
-        mLoginMVP = new LoginPresenter(this); //Al presentador se le referencia la vista porque tiene conexion directa con ella.
+        mLoginMVP = new LoginPresenterImpl(this); //Al presentador se le referencia la vista porque tiene conexion directa con ella.
         mETUser =  (EditText) findViewById(R.id.et_user);
         mETPassword =  (EditText) findViewById(R.id.et_passwd);
         mTilUser = (TextInputLayout)findViewById(R.id.til_user);

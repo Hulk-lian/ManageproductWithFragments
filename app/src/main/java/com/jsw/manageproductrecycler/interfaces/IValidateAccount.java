@@ -20,7 +20,7 @@ public interface IValidateAccount {
     }
 
      interface IPresenter{
-        //ILogin.View mView;
+        //LoginPresenter.View mView;
         Pattern p1 = Pattern.compile("[a-zA-Z0-9]{8,30}");
         Pattern p2 = Pattern.compile("[A-Z]");
         Pattern p3 = Pattern.compile("[0-9]");

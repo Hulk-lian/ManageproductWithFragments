@@ -1,18 +1,18 @@
-package com.jsw.manageproductrecycler;
+package com.jsw.manageproductrecycler.presenter;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Patterns;
 
 import com.jsw.manageproductrecycler.Model.Error;
-import com.jsw.manageproductrecycler.Prefs.AccountPrefs;
+import com.jsw.manageproductrecycler.Prefs.AccountPrefsImpl;
+import com.jsw.manageproductrecycler.R;
 import com.jsw.manageproductrecycler.interfaces.IValidateAccount;
-import com.jsw.manageproductrecycler.interfaces.IvalidateUser;
+import com.jsw.manageproductrecycler.interfaces.SignupPresenter;
 import com.jsw.manageproductrecycler.utils.ErrorMapUtils;
 
 //                                  presenter del user        presenter del Ivalidateaccount
-public class SignupPresenter implements IvalidateUser.Presenter,IvalidateUser.IPresenter {
+public class SignupPresenterImpl implements SignupPresenter.Presenter,SignupPresenter.IPresenter {
 
     private  IValidateAccount.View view;
     private int validateUser;
@@ -20,7 +20,7 @@ public class SignupPresenter implements IvalidateUser.Presenter,IvalidateUser.IP
     private int validateEmail;
     private Context context;
 
-    public SignupPresenter(IValidateAccount.View view){
+    public SignupPresenterImpl(IValidateAccount.View view){
         this.view = view;
         this.context = (Context)view;
     }
@@ -61,7 +61,7 @@ public class SignupPresenter implements IvalidateUser.Presenter,IvalidateUser.IP
     }
 
     private void savePreferences(String user,String pass,String email){
-        AccountPrefs accountPrefs= (AccountPrefs) AccountPrefs.getInstance(this.context);
+        AccountPrefsImpl accountPrefs= (AccountPrefsImpl) AccountPrefsImpl.getInstance(this.context);
         accountPrefs.putUser(user);
         accountPrefs.putPassword(pass);
         accountPrefs.putMail(email);

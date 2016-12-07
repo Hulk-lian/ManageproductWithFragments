@@ -1,30 +1,24 @@
-package com.jsw.manageproductrecycler;
+package com.jsw.manageproductrecycler.presenter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Patterns;
 
 import com.jsw.manageproductrecycler.Model.Error;
+import com.jsw.manageproductrecycler.R;
 import com.jsw.manageproductrecycler.interfaces.IValidateAccount;
 import com.jsw.manageproductrecycler.utils.ErrorMapUtils;
 
 import java.util.Map;
 
-/**
- * Created by joselu on 19/10/16.
- * Login Presenter.
- * Checks user and password fields.
- */
-
-
-public class LoginPresenter implements IValidateAccount.IPresenter{
+public class LoginPresenterImpl implements IValidateAccount.IPresenter{
 
     private  IValidateAccount.View view;
     private int validateUser;
     private int validatePassword;
     private Context context;
 
-    public LoginPresenter(IValidateAccount.View view){
+    public LoginPresenterImpl(IValidateAccount.View view){
         this.view = view;
         this.context = (Context)view;
     }
