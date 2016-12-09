@@ -25,6 +25,8 @@ import com.jsw.manageproductrecycler.Model.Product;
 import com.jsw.manageproductrecycler.Settings.AccountSettings;
 import com.jsw.manageproductrecycler.Settings.GeneralSettings;
 import com.jsw.manageproductrecycler.interfaces.IProducto;
+import com.jsw.manageproductrecycler.presenter.ProductPresenter;
+import com.jsw.manageproductrecycler.presenter.ProductPresenterImpl;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ import java.util.List;
 
 //no es necesario llamar al notifyDataSetChande despues de add, insert, remove,clear y sort
 // porque estos metodos lo llama automaticamente setNotyfiOnChange = true y se utiliza la copia local.
-public class ListProductFragment extends Fragment implements IProducto {
+public class ListProductFragment extends Fragment implements IProducto, ProductPresenter.View {
 
   //  private ReciclerAdapter mAdapter; //Adapter
     //private RecyclerView mReciclerView; //Recycler View
@@ -67,7 +69,7 @@ public class ListProductFragment extends Fragment implements IProducto {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapterP= new ProductAdapter(getContext());
-        presenter= new ProductPresenter(this);
+        presenter= new ProductPresenterImpl(this);
 
         setRetainInstance(true);
         /*
@@ -172,26 +174,38 @@ public class ListProductFragment extends Fragment implements IProducto {
                 //mAdapter.sortProducts();
                 break;
             case R.id.action_account_settings:
-                intent = new Intent(this, AccountSettings.class);
+                intent = new Intent(getContext(), AccountSettings.class);
                 startActivity(intent);
                 break;
             case R.id.action_general_settings:
-                intent = new Intent(this, GeneralSettings.class);
+                intent = new Intent(getContext(), GeneralSettings.class);
                 startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void showProducts(List<Product> products){
-        adapterP.updateProduct(products);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adapterP=null;
+        presenter=null;
     }
+
     private void hideList(boolean hide){
         listProduct.setVisibility(hide?View.GONE:View.VISIBLE);
         txvNodata.setVisibility(hide?View.VISIBLE:View.GONE);
     }
-    public void showEmptyState() {
-        hideList(true);
+
+    public void showProducts(List<Product> products){
+        adapterP.updateProduct(products);
+    }
+    //muesrta u oculta la lista
+    public void showEmptyText(boolean show) {
+        hideList(!show);
+    }
+    public void showMessage(String message){
+
     }
 
    /*
