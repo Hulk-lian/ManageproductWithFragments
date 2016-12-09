@@ -22,7 +22,12 @@ public class ManageProductFragment extends Fragment implements IProducto {
     int img;
     private String PRODUCTKEY=PRODUCT_KEY;
 
+    //objecto que  comunica la activity con el listproductListener
+    private ManageProductListener mCallback;
 
+    interface ManageProductListener{
+        void showListProduct(Bundle bundle);//lanza el fragment manageproduct
+    }
     @Override
     public void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

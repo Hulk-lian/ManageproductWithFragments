@@ -15,6 +15,7 @@ import com.jsw.manageproductrecycler.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 public class ProductAdapter extends ArrayAdapter<Product>{
@@ -90,6 +91,10 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     public boolean removeProduct(Product p){
         remove(p);
         return  true;
+    }
+    public void updateProduct(List<Product> products){
+        clear();
+        addAll(products);
     }
 
 }

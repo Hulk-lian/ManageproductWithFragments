@@ -24,4 +24,5 @@
     <string name="alertDialog_sure">¿Seguro que desea eliminar?</string>
     <string name="alertDialog_yes">Si</string>
     <string name="alertDialog_no">No</string>
+    <string name="no_data">No hay datos</string>
 </resources>

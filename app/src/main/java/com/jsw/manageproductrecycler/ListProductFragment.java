@@ -18,12 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jsw.manageproductrecycler.Adapter.ProductAdapter;
 import com.jsw.manageproductrecycler.Model.Product;
 import com.jsw.manageproductrecycler.Settings.AccountSettings;
 import com.jsw.manageproductrecycler.Settings.GeneralSettings;
 import com.jsw.manageproductrecycler.interfaces.IProducto;
+
+import java.util.List;
 
 /*Cuando hacemos que herede de ListActivity Internamente ya tiene un tipo definido que es la lista
 *
@@ -37,19 +40,17 @@ public class ListProductFragment extends Fragment implements IProducto {
   //  private ReciclerAdapter mAdapter; //Adapter
     //private RecyclerView mReciclerView; //Recycler View
 
-    private static final int EDIT_PRODUCT = 1;
-    private static final int ADD_PRODUCT = 0;
-
     private ListView listProduct;
     private FloatingActionButton fabAdd;
+    private TextView txvNodata;
 
 
     private ProductAdapter adapterP;
 
-    public static String PRODUCKKEY=PRODUCT_KEY;
-
     private Intent intent;
     boolean sorted = false;
+
+    private ProductPresenter presenter;
 
     Product paux;
     int posProd;
@@ -59,12 +60,21 @@ public class ListProductFragment extends Fragment implements IProducto {
     private ListProductListener mCallback;
 
     interface ListProductListener{
-        showManageProduct(Bundle bundle);//lanza el fragment manageproduct
+        void showManageProduct(Bundle bundle);//lanza el fragment manageproduct
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapterP= new ProductAdapter(getContext());
+        presenter= new ProductPresenter(this);
+
+        setRetainInstance(true);
+        /*
+        Esta opcion le dice a la activity que el fragment tiene su propio menu y llama al
+        metodo callback onCreateOptionMenu().
+         */
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -78,6 +88,7 @@ public class ListProductFragment extends Fragment implements IProducto {
     }
 
 
+    //desinicializar todo lo que se inicializa en el onAttach
     @Override
     public void onDetach() {
         super.onDetach();
@@ -88,15 +99,13 @@ public class ListProductFragment extends Fragment implements IProducto {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        setContentView(R.layout.fragment_list_product);
-       // mAdapter = new ReciclerAdapter(this); //Add the adapter
+        View rootView=inflater.inflate(R.layout.fragment_list_product,container,false);
+        listProduct=(ListView)rootView.findViewById(R.id.lisVlistItems);
+        txvNodata=(TextView)rootView.findViewById(android.R.id.empty);
 
-        adapterP= new ProductAdapter(this);
-        listProduct=(ListView)findViewById(R.id.lisVlistItems);
         listProduct.setAdapter(adapterP);
-        fabAdd=(FloatingActionButton)findViewById(R.id.AP_fab_añadir);
 
-       // btnctmdelete=(Button)findViewById(R.id.btn_delete_ctm);
+        fabAdd=(FloatingActionButton)rootView.findViewById(R.id.AP_fab_añadir);
 
         registerForContextMenu(listProduct);//AL implementar el registrer no es necesario el onLongClickListener
 
@@ -108,10 +117,8 @@ public class ListProductFragment extends Fragment implements IProducto {
                 posProd=position;
 
                 Bundle bundle= new Bundle();
-                bundle.putParcelable(PRODUCKKEY, paux);
-                Intent intent= new Intent(ListProductFragment.this,ManageProductFragment.class);
-                intent.putExtras(bundle);
-                startActivityForResult(intent,EDIT_PRODUCT);
+                bundle.putParcelable(IProducto.PRODUCT_KEY, paux);
+                mCallback.showManageProduct(bundle);
 
             }
         });
@@ -121,6 +128,8 @@ public class ListProductFragment extends Fragment implements IProducto {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 posProd=i;
+                //mostrar el dialog y ver la opcion que elige
+
                 return false;
             }
         });
@@ -128,53 +137,26 @@ public class ListProductFragment extends Fragment implements IProducto {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                add(view);
+                mCallback.showManageProduct(null);
             }
         });
-       // mReciclerView = (RecyclerView)findViewById(R.id.rv_vista); //View instance
-        //mReciclerView.setLayoutManager(new LinearLayoutManager(this)); //Set the layout manager with a linearlayout
-       // mReciclerView.setAdapter(mAdapter); //Add the adapter with the view
+
+
+        return rootView;
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        //contiene info de la vista donde se muestra el menu contextal
-        AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        posProd=info.position;
 
-        if (item.getItemId()== R.id.btn_delete_ctm) {
-
-            new AlertDialog.Builder(ListProductFragment.this).setTitle(R.string.alertDialog_title)
-                    .setMessage(R.string.alertDialog_sure)
-                    .setPositiveButton(R.string.alertDialog_yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                           adapterP.removeProduct((Product) listProduct.getItemAtPosition(posProd));
-                        }
-                    })
-                    .setNegativeButton(R.string.alertDialog_no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    }).show();
-
-
-        }
-         return super.onContextItemSelected(item);
-
-    }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
-        MenuInflater inflater = new MenuInflater(this);
+        MenuInflater inflater = new MenuInflater(getContext());
         inflater.inflate(R.menu.context_menu_items, menu);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.product_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_listproduct,menu);
     }
 
     /**
@@ -201,11 +183,18 @@ public class ListProductFragment extends Fragment implements IProducto {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Floating Add Button actions.
-     * It opens the AddProduct Activity
-     * @param v Button View
-     */
+    public void showProducts(List<Product> products){
+        adapterP.updateProduct(products);
+    }
+    private void hideList(boolean hide){
+        listProduct.setVisibility(hide?View.GONE:View.VISIBLE);
+        txvNodata.setVisibility(hide?View.VISIBLE:View.GONE);
+    }
+    public void showEmptyState() {
+        hideList(true);
+    }
+
+   /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -229,16 +218,5 @@ public class ListProductFragment extends Fragment implements IProducto {
            // mAdapter.addProduct(p);
             //mAdapter.notifyDataSetChanged();
 
-        }
-
-    /**
-     * Floating Add Button actions.
-     * It opens the AddProduct Activity
-     * @param v Button View
-     */
-    public void add(View v){
-        intent = new Intent(ListProductFragment.this, ManageProductFragment.class);
-        startActivityForResult(intent, 0);
-    }
-
+        }*/
 }
