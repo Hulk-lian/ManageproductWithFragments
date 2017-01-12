@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ManageproductWithFragments.iml" filepath="$PROJECT_DIR$/ManageproductWithFragments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ManageproductDB.iml" filepath="$PROJECT_DIR$/ManageproductDB.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecyclerProductFragments.iml" filepath="$PROJECT_DIR$/RecyclerProductFragments.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/deint_ManageProductRecycler.iml" filepath="$PROJECT_DIR$/deint_ManageProductRecycler.iml" />
     </modules>

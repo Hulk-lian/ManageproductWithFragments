@@ -31,17 +31,32 @@ public class ProductPresenterImpl implements ProductPresenter{
 
     @Override
     public void deleteProduct(Product product) {
-        repository.deleteProduct(product);
+       // repository.deleteProduct(product);
 
         //DEPENDE de la implementacion
         //opcion 1
-       loadProducts();
+       //loadProducts();
+        view.showMessageDelete(product);
 
         //opcion 2
         /*view.getAdapter().deleteProduct();
         if(view.getAdapter().isEmty){
             view.showEmptyText(true);
         }*/
+    }
+
+
+    //metodo que elimina definitivamente el elemento cuando se cierra el snackbar
+    @Override
+    public void deleteFinallyProduct(Product product) {
+        repository.deleteProduct(product);
+        loadProducts();
+    }
+
+    @Override
+    public void addProduct(Product p){
+        repository.add(p);
+        view.showProducts(repository.getProducts());
     }
 
     @Override

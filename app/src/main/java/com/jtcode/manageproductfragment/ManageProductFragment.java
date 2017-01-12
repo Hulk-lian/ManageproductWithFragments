@@ -27,10 +27,10 @@ public class ManageProductFragment extends Fragment implements IProducto {
     interface ManageProductListener{
         void showListProduct(Bundle bundle);//lanza el fragment manageproduct
     }
-    @Override
+/*    @Override
     public void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_add_product);
+       setContentView(R.layout.fragment_add_product);
         mName = (TextInputLayout) findViewById(R.id.til_nombre);
         mTrademark = (TextInputLayout) findViewById(R.id.til_marca);
         mDosage = (TextInputLayout) findViewById(R.id.til_dosage);
@@ -62,7 +62,8 @@ public class ManageProductFragment extends Fragment implements IProducto {
             //mImage.set (R.drawable.new_d);
         }
 
-    }
+    }*/
+
     private boolean comprdatos(){
         if(TextUtils.isEmpty(mName.getEditText().getText().toString()) ||
         TextUtils.isEmpty(mTrademark.getEditText().getText().toString()) ||
@@ -76,7 +77,7 @@ public class ManageProductFragment extends Fragment implements IProducto {
     }
 
     public void guardar(View v){
-
+/*
         if(comprdatos()) {
 
             Bundle bundle = new Bundle();
@@ -97,6 +98,7 @@ public class ManageProductFragment extends Fragment implements IProducto {
             setResult(RESULT_OK, intent);
             finish();
         }
+        */
     }
 
 

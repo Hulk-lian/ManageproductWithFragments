@@ -25,4 +25,8 @@
     <string name="alertDialog_yes">Si</string>
     <string name="alertDialog_no">No</string>
     <string name="no_data">No hay datos</string>
+
+    <string name="drawer_open">Drawer Abierto</string>
+    <string name="drawer_cerrado">Drawer Cerrado</string>
+
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -167,9 +168,6 @@ public class ListProductFragment extends Fragment implements IProducto, ProductP
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_sort_product:
-                //mAdapter.sortProducts();
-                break;
             case R.id.action_account_settings:
                 intent = new Intent(getContext(), AccountSettings.class);
                 startActivity(intent);
@@ -203,6 +201,37 @@ public class ListProductFragment extends Fragment implements IProducto, ProductP
     }
     public void showMessage(String message){
 
+    }
+
+    /**
+     *
+     *@param p
+     */
+    @Override
+    public void showMessageDelete(final Product p) {
+
+        Snackbar.make(getView(),"Producto eliminado",Snackbar.LENGTH_LONG)
+                .setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.addProduct(p);
+                    }
+                })
+                .show();
+/*        // SETCALLBACK
+        //hacer una llamada a un metodo callback de un snackbar,
+        //si el snackbar se ha eliminado mediante swipe
+        .setCallback(new Snackbar.Callback(){
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                super.onDismissed(snackbar, event);
+                if(event==DISMISS_EVENT_TIMEOUT || event== DISMISS_EVENT_MANUAL ||
+                        event==DISMISS_EVENT_SWIPE || event==DISMISS_EVENT_CONSECUTIVE){
+                    presenter.deleteFinallyProduct(p);
+                }
+            }
+
+        }).show();*/
     }
 
    /*
